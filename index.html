@@ -1,0 +1,506 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link href='https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap' rel='stylesheet'>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <meta property="og:site_name" content="LooseRoPE" />
+    <meta property="og:type" content="video.other" />
+    <meta property="og:title" content="LooseRoPE: Content-aware Attention Manipulation for Semantic Harmonization" />
+    <meta property="og:description" content="A saliency-guided modulation of rotational positional encoding for seamless crop-and-paste image editing." />
+    <meta property="og:url" content="" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="LooseRoPE: Content-aware Attention Manipulation for Semantic Harmonization" />
+    <meta name="twitter:description" content="A saliency-guided modulation of rotational positional encoding for seamless crop-and-paste image editing." />
+
+    <title>LooseRoPE: Content-aware Attention Manipulation for Semantic Harmonization</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+    <link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="page-container">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+    <!-- title -->
+    <h1 class="ourh1" align="center"><span class="title-loose">Loose</span><span class="title-rope">RoPE</span></h1>
+    <h2 class="ourh2" align="center">Content-aware Attention Manipulation for Semantic Harmonization</h2>
+    <div class="rope-img-container" align="center">
+        <img src="./webpage_assets/images/rope.png" alt="Rope" class="rope-img">
+    </div>
+	
+    <!-- authors and affiliations -->
+    <section class="authors_block">
+        <div class="authors" align="center">
+            <span class="author-block"><a href="https://etaisella.github.io/" target="_blank">Etai Sella</a><sup>1,2</sup>,</span>
+            <span class="author-block"><a href="https://il.linkedin.com/in/yoavba" target="_blank">Yoav Baron</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://www.hadarelor.com/" target="_blank">Hadar Averbuch-Elor</a><sup>3</sup></span>
+            <span class="author-block"><a href="https://danielcohenor.com/" target="_blank">Daniel Cohen-Or</a><sup>1,2</sup>,</span>
+            <span class="author-block"><a href="https://orpatashnik.github.io/ target="_blank">Or Patashnik</a><sup>1,2</sup>,</span>
+        </div>
+
+		<div class="affiliations" align="center">
+            <span class="author-block"><sup>1</sup>Tel Aviv University, </span>
+            <span class="author-block"><sup>2</sup>Snap Research, </span>
+			<span class="author-block"><sup>3</sup>Cornell University</span>
+        </div>
+    </section>
+
+    <!-- link buttons -->
+    <div class="column has-text-centered">
+        <div class="publication-links" align="center">
+
+          <!-- arxiv link -->
+          <span class="link-block">
+            <a href="#" class="paper-link" style="display: inline-block">
+                <button class="button">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </button>
+            </a>
+          </span>
+
+          <!-- Github Link. -->
+          <span class="link-block">
+            <a href="#" style="display: inline-block">
+                <button class="button">
+                    <span class="icon">
+                        <i class="fa fa-github"></i>
+                    </span>
+                    <span>Code (coming soon)</span>
+                  </button>
+            </a>
+          </span>
+
+        </div>
+    </div>
+
+    <!-- teaser video -->
+    <div class="introvid">
+		<video loop autoplay muted width="100%" class="result-video">
+			<source src="webpage_assets/videos/teaser.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- intro -->
+    <section class="into-paragraph-section" width="100%">
+        <div class="intro-container has-text-justified">
+            <div class="intro-paragraph">
+                <p>
+                    <br>
+                    <span class="intro-paragraph_bold">TL;DR:</span> We introduce <span class="highlight-method">LooseRoPE</span>, 
+                    a training-free method for <span class="highlight-task">semantic harmonization</span> — seamlessly blending 
+                    cropped-and-pasted objects into new scenes while preserving their identity 
+                    and achieving visual coherence. No text prompts needed.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- abstract -->
+    <section class="abstract-section" width="100%">
+        <div class="abstract-container has-text-justified">
+            <hr>
+            <h2 align="center">Abstract</h2>
+            <p class="has-text-justified">
+                Recent diffusion-based image editing methods commonly rely on text or high-level instructions to guide the generation process, offering intuitive but coarse control.
+                In contrast, we focus on explicit, prompt-free editing, where the user directly specifies the modification by cropping and pasting an object or sub-object into a chosen location within an image. 
+                This operation affords precise spatial and visual control, yet it introduces a fundamental challenge: <em>preserving the identity of the pasted object while harmonizing it with its new context</em>. 
+                We observe that attention maps in diffusion-based editing models inherently govern whether image regions are preserved or adapted for coherence. 
+                Building on this insight, we introduce <strong>LooseRoPE</strong>, a saliency-guided modulation of rotational positional encoding (RoPE) that loosens the positional constraints to continuously control the attention field of view.
+                By relaxing RoPE in this manner, our method smoothly steers the model's focus between faithful preservation of the input image and coherent harmonization of the inserted object, enabling a balanced trade-off between identity retention and contextual blending.
+                Our approach provides a flexible and intuitive framework for image editing, achieving seamless compositional results without textual descriptions or complex user input.
+            </p>
+    </section>
+
+    <!-- result-section -->
+	<section class="result-section" width="100%">
+        <div class="swipe-container has-text-justified" align="center">
+            <hr>
+            <h2 align="center">Sample Results</h2><br></br>
+			<div class="swiper">
+        <div class="swiper-wrapper" align="center">
+          <!-- Slide 1: Giraffe Duck -->
+          <div class="swiper-slide">
+            <table class="slide-table" width="100%" align="center">
+                <tbody>
+                    <tr>
+                        <td width="33%">
+                            <img align="center" src="./webpage_assets/images/result_showcase/input_giraffeduck.png" alt="Input">
+                        </td>
+                        <td width="33%">
+                            <img align="center" src="./webpage_assets/images/result_showcase/vanilla_giraffeduck.png" alt="Flux Kontext">
+                        </td>
+                        <td width="33%">
+                            <img align="center" src="./webpage_assets/images/result_showcase/ours_giraffeduck.png" alt="Ours">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="33%">
+                            <div align="center" class="video-label-slides">Input Image</div>
+                        </td>
+                        <td width="33%">
+                            <div align="center" class="video-label-slides">Flux Kontext</div>
+                        </td>
+                        <td width="33%">
+                            <div align="center" class="video-label-slides">LooseRoPE (Ours)</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+          </div>
+          <!-- Slide 2: Boombox -->
+          <div class="swiper-slide">
+            <table class="slide-table" width="100%" align="center">
+                <tbody>
+                    <tr>
+                        <td width="33%">
+                            <img align="center" src="./webpage_assets/images/result_showcase/input_boombox.png" alt="Input">
+                        </td>
+                        <td width="33%">
+                            <img align="center" src="./webpage_assets/images/result_showcase/vanilla_boombox.png" alt="Flux Kontext">
+                        </td>
+                        <td width="33%">
+                            <img align="center" src="./webpage_assets/images/result_showcase/ours_boombox.png" alt="Ours">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="33%">
+                            <div align="center" class="video-label-slides">Input Image</div>
+                        </td>
+                        <td width="33%">
+                            <div align="center" class="video-label-slides">Flux Kontext</div>
+                        </td>
+                        <td width="33%">
+                            <div align="center" class="video-label-slides">LooseRoPE (Ours)</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+          </div>
+          <!-- Slide 4: Platter -->
+          <div class="swiper-slide">
+            <table class="slide-table" width="100%" align="center">
+                <tbody>
+                    <tr>
+                        <td width="33%">
+                            <img align="center" src="./webpage_assets/images/result_showcase/input_platter.png" alt="Input">
+                        </td>
+                        <td width="33%">
+                            <img align="center" src="./webpage_assets/images/result_showcase/vanilla_platter.png" alt="Flux Kontext">
+                        </td>
+                        <td width="33%">
+                            <img align="center" src="./webpage_assets/images/result_showcase/ours_platter.png" alt="Ours">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="33%">
+                            <div align="center" class="video-label-slides">Input Image</div>
+                        </td>
+                        <td width="33%">
+                            <div align="center" class="video-label-slides">Flux Kontext</div>
+                        </td>
+                        <td width="33%">
+                            <div align="center" class="video-label-slides">LooseRoPE (Ours)</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+          </div>
+          <!-- Slide 5: Police -->
+          <div class="swiper-slide">
+            <table class="slide-table" width="100%" align="center">
+                <tbody>
+                    <tr>
+                        <td width="33%">
+                            <img align="center" src="./webpage_assets/images/result_showcase/input_police.png" alt="Input">
+                        </td>
+                        <td width="33%">
+                            <img align="center" src="./webpage_assets/images/result_showcase/vanilla_police.png" alt="Flux Kontext">
+                        </td>
+                        <td width="33%">
+                            <img align="center" src="./webpage_assets/images/result_showcase/ours_police.png" alt="Ours">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="33%">
+                            <div align="center" class="video-label-slides">Input Image</div>
+                        </td>
+                        <td width="33%">
+                            <div align="center" class="video-label-slides">Flux Kontext</div>
+                        </td>
+                        <td width="33%">
+                            <div align="center" class="video-label-slides">LooseRoPE (Ours)</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+          </div>
+          <!-- Slide 5: Snail -->
+          <div class="swiper-slide">
+            <table class="slide-table" width="100%" align="center">
+                <tbody>
+                    <tr>
+                        <td width="33%">
+                            <img align="center" src="./webpage_assets/images/result_showcase/input_snail.png" alt="Input">
+                        </td>
+                        <td width="33%">
+                            <img align="center" src="./webpage_assets/images/result_showcase/vanilla_snail.png" alt="Flux Kontext">
+                        </td>
+                        <td width="33%">
+                            <img align="center" src="./webpage_assets/images/result_showcase/ours_snail.jpeg" alt="Ours">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="33%">
+                            <div align="center" class="video-label-slides">Input Image</div>
+                        </td>
+                        <td width="33%">
+                            <div align="center" class="video-label-slides">Flux Kontext</div>
+                        </td>
+                        <td width="33%">
+                            <div align="center" class="video-label-slides">LooseRoPE (Ours)</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+          </div>
+          <!-- Slide 6: Horse Cat -->
+          <div class="swiper-slide">
+            <table class="slide-table" width="100%" align="center">
+                <tbody>
+                    <tr>
+                        <td width="33%">
+                            <img align="center" src="./webpage_assets/images/result_showcase/input_horsecat.jpeg" alt="Input">
+                        </td>
+                        <td width="33%">
+                            <img align="center" src="./webpage_assets/images/result_showcase/vanilla_horsecat.jpeg" alt="Flux Kontext">
+                        </td>
+                        <td width="33%">
+                            <img align="center" src="./webpage_assets/images/result_showcase/ours_horsecat.jpeg" alt="Ours">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="33%">
+                            <div align="center" class="video-label-slides">Input Image</div>
+                        </td>
+                        <td width="33%">
+                            <div align="center" class="video-label-slides">Flux Kontext</div>
+                        </td>
+                        <td width="33%">
+                            <div align="center" class="video-label-slides">LooseRoPE (Ours)</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+          </div>
+          <!-- Slide 7: Soldier Surf -->
+          <div class="swiper-slide">
+            <table class="slide-table" width="100%" align="center">
+                <tbody>
+                    <tr>
+                        <td width="33%">
+                            <img align="center" src="./webpage_assets/images/result_showcase/input_soldiersurf.png" alt="Input">
+                        </td>
+                        <td width="33%">
+                            <img align="center" src="./webpage_assets/images/result_showcase/vanilla_soldiersurf.png" alt="Flux Kontext">
+                        </td>
+                        <td width="33%">
+                            <img align="center" src="./webpage_assets/images/result_showcase/ours_soldiersurf.png" alt="Ours">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="33%">
+                            <div align="center" class="video-label-slides">Input Image</div>
+                        </td>
+                        <td width="33%">
+                            <div align="center" class="video-label-slides">Flux Kontext</div>
+                        </td>
+                        <td width="33%">
+                            <div align="center" class="video-label-slides">LooseRoPE (Ours)</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- pagination -->
+        <div class="swiper-pagination"></div>
+        <!-- navigation buttons -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+        
+            <br></br>
+		
+    </section>
+	<div class="abstract-container has-text-justified">
+			<p class="has-text-justified">
+                Sample results demonstrating LooseRoPE's ability to seamlessly blend cropped objects into new scenes. 
+                Our method preserves the identity of pasted objects while achieving natural integration with the surrounding context.
+            </p>
+	</div>
+
+    <!-- method -->
+    <section class="method-section" width="100%">
+        <div class="method-container">
+            <hr>
+            <h2 align="center">How does it work?</h2>
+		<br>
+            
+            <!-- Failure modes explanation -->
+            <h3 class="method-subheading">The Challenge: Neglect vs. Suppression</h3>
+            <p class="has-text-justified">
+                While editing models such as <strong>Flux Kontext</strong> have demonstrated powerful editing capabilities, 
+                when tasked with our semantic harmonization task — blending a cropped-and-pasted object into a new scene — 
+                they often suffer from one of two failure modes:
+            </p>
+            <br>
+            <ul class="failure-list">
+                <li><span class="failure-neglect">Neglect:</span> The pasted region is barely modified, leaving visible seams and unnatural boundaries. The model fails to blend the inserted object with its new context.</li>
+                <li><span class="failure-suppression">Suppression:</span> The pasted object disappears entirely, as the model's generative prior overrides its appearance and identity.</li>
+            </ul>
+            <br>
+            <p class="has-text-justified">
+                We find that these failures are caused by attention to the input image being either <em>too localized</em> (causing neglect) 
+                or <em>too semantic/diffuse</em> (causing suppression).
+            </p>
+            <br>
+            
+            <!-- Failure modes figure -->
+            <div class="im_container has-text-justified" width="90%" align="center">
+                <img align="center" src="./webpage_assets/images/failure_modes.png" alt="Failure Modes" width="100%">
+                <p class="figure-caption">
+                    <strong>Failure modes of Flux Kontext.</strong> Left: <em>Neglect</em> — the pasted object (traffic cone, swan) remains unblended with visible artifacts. 
+                    Right: <em>Suppression</em> — the pasted object (turtle pattern on face, parrot) is completely removed by the model.
+                </p>
+            </div> 
+            <br><br>
+
+            <!-- Our solution -->
+            <h3 class="method-subheading">Our Solution: Saliency-Guided RoPE Modulation</h3>
+            <p class="has-text-justified">
+                We observe that attention maps in diffusion-based editing models inherently govern whether image regions 
+                are preserved or adapted for coherence. Building on this insight, we introduce <strong>LooseRoPE</strong> — 
+                a saliency-guided modulation of Rotary Positional Encoding (RoPE) that acts as a continuous controller 
+                of the attention field of view.
+            </p>
+            <br>
+            <p class="has-text-justified">
+                Our key insight is that effective blending requires an <em>adaptive balance</em>:
+            </p>
+            <ul class="method-list">
+                <li>🎯 <strong>Semantically important regions</strong> (e.g., faces, distinctive features) should attend <em>locally</em> to preserve their identity</li>
+                <li>🌍 <strong>Less salient regions</strong> (e.g., backgrounds, uniform textures) should attend <em>broadly</em> to achieve visual coherence</li>
+            </ul>
+            <br>
+            <p class="has-text-justified">
+                By "loosening" the positional constraints of RoPE based on a saliency map, we smoothly steer the model's focus 
+                between faithful preservation of the input image and coherent harmonization of the inserted object.
+            </p>
+            <br>
+
+            <!-- Method figure -->
+            <div class="im_container im_container_wide has-text-justified" align="center">
+                <img align="center" src="./webpage_assets/images/method.png" alt="Method Overview" width="100%">
+                <p class="figure-caption">
+                    <strong>LooseRoPE overview.</strong> We estimate a saliency map for the pasted region, then use it to modulate RoPE during inference. 
+                    High-saliency queries attend locally to preserve identity, while low-saliency queries attend broadly for seamless blending.
+                </p>
+            </div> 
+            <br>
+
+            <p class="has-text-justified">
+                Our method consists of two key components:
+            </p>
+            <br>
+            <p class="has-text-justified">
+                📍 <strong>Saliency Estimation:</strong> We use a pre-trained instance detection network to extract feature activations 
+                that highlight semantically meaningful regions (e.g., facial features, object-defining details) while assigning 
+                low values to redundant regions.
+            </p>
+            <br>
+            <p class="has-text-justified">
+                🔧 <strong>Content-Aware Attention Manipulation:</strong> We modulate the attention weights between output queries 
+                and input keys according to saliency. This is done through (1) RoPE-based manipulation that controls the effective 
+                spatial range of attention, and (2) a crop attention factor that scales attention weights to prevent suppression 
+                of salient regions.
+            </p>
+            <br>
+            <p class="has-text-justified">
+                💡 <strong>VLM-Based Parameter Steering:</strong> We optionally leverage a vision-language model to automatically 
+                detect signs of neglect or suppression early in the diffusion process and adaptively adjust parameters for optimal results.
+            </p>
+        </div>
+    </section>
+
+<!--     BibTex-->
+    <section class="bib-section" width="100%">
+        <div class="bib-container">
+            <hr>
+            <h2 align="center">BibTeX</h2>
+            <div class="code-container" align="left">
+                <code>
+                  @misc{sella2025instancegenimagegenerationinstancelevel, <br>
+                &emsp;   &emsp; title={InstanceGen: Image Generation with Instance-level Instructions},  <br>
+                &emsp;   &emsp; author={Etai Sella and Yanir Kleiman and Hadar Averbuch-Elor}, <br>
+                &emsp;   &emsp; year={2025}, <br>
+                &emsp;   &emsp; eprint={2505.05678}, <br>
+                &emsp;   &emsp; archivePrefix={arXiv}, <br>
+                &emsp;   &emsp; primaryClass={cs.CV}, <br>
+				&emsp;   &emsp; url={https://arxiv.org/abs/2505.05678}, <br>
+
+                  }
+                </code>
+            </div>
+        </div>
+    </section>
+
+<!--    Acknowledgements -->
+    <section class="ack-section" width="100%"> 
+        <div class="ack-container">
+            <hr> 
+            <h2 align="center">Acknowledgements</h2> 
+            <p> 
+                Acknowledgements coming soon.
+            </p> 
+        </div> 
+    </section> 
+
+  <p><br>
+  </p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+
+</div>
+<script>
+const swiper = new Swiper('.swiper', {
+    autoplay: {
+    delay: 6000,
+    },
+    speed: 1000,
+    loop: true,
+  
+    pagination: {
+      el: '.swiper-pagination',
+    },
+  
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  });
+</script>
+
+</body></html>
+
