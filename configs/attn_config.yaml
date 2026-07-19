@@ -1,0 +1,120 @@
+# ============================================================================
+# COORDINATE CONFIGURATION
+# ============================================================================
+
+# by default this will load the inside and outside coords from the input image's parent folder
+inside_coords_file: null
+outside_coords_file: null
+
+# ============================================================================
+# MASKING RANGE CONFIGURATION
+# ============================================================================
+
+# Range of diffusion steps to apply masking [start_step, end_step]
+# Valid range: [0, 28] where 28 is NUM_STEPS
+
+masking_step_range: [10, 28]
+
+# Range of transformer layers to apply masking [start_layer, end_layer]
+# Valid range: [0, 57] where 57 is NUM_LAYERS
+
+masking_layer_range: [0, 40]
+
+# ============================================================================
+# ATTENTION MASK CONFIGURATION
+# ============================================================================
+
+# Path to numpy file containing 64x64 binary attention mask
+# Set to null to use default 64x64 ones matrix (applies masking everywhere)
+# The mask should contain only 0s and 1s where 1 indicates areas to apply attention masking
+in_image_attn_mask: crop
+in_image_mask_val: 1.0
+
+# ============================================================================
+# TEXT EMPHASIZING MASK CONFIGURATION
+# ============================================================================
+
+# Path to numpy file containing 64x64 binary attention mask
+# Set to null to use default 64x64 ones matrix (applies masking everywhere)
+# The mask should contain only 0s and 1s where 1 indicates areas to apply attention masking
+text_emphasizing_mask_file: crop
+text_emphasizing_mask_val: 1.0
+text_emphasizing_step_range: [0, 15]
+text_emphasizing_layer_range: [0, 56]
+
+# ============================================================================
+# CUSTOM IMG IDS CONFIGURATION
+# ============================================================================
+
+use_custom_pos_embed: true
+start_h: 0
+start_w: 0
+end_h: 63
+end_w: 63
+custom_pos_embed_step_range: [0, 22]
+custom_pos_embed_layer_range: [0, 56]
+per_query_mask_file: crop
+#per_query_dilation_steps_mask: 5
+
+# ============================================================================
+# SAVE NORM MAPS CONFIGURATION
+# ============================================================================
+
+save_norm_maps: null
+
+# ============================================================================
+# SAVE ATTENTION MAPS CONFIGURATION
+# ============================================================================
+
+save_attention_maps: null
+
+# ============================================================================
+# X0 PREDICTION CONFIGURATION
+# ============================================================================
+
+# X0 predictions are opt-in debug artifacts. Set this to true and choose
+# steps below to write PNG files under x0_predictions/.
+save_x0_predictions: false
+
+# Valid range: [0, 27] where 28 is NUM_STEPS (0-indexed).
+# Example: [0, 5, 10, 15, 20, 25]
+x0_prediction_steps: []
+
+# ============================================================================
+# CONTINUOUS SALIENCY CONFIGURATION
+# ============================================================================
+
+cont_mode: true
+cont_N: 5
+cont_shrink_factor_low: 0.65
+cont_shrink_factor_high: 1.0
+cont_in_img_attn_factor_low: 0.65 # 0.82 worked
+cont_in_img_attn_factor_high: 1.345 # 1.34 worked
+cont_step_shrink: 0.7
+cont_cutoffs: [10, 18]
+#cont_cutoffs: [10] #10 kinda worked
+cont_saliency_boost: 0.83 # 1.1 worked
+cont_annealing_factor: 1.4
+cont_shrink_k: 3.5
+cont_in_img_attn_k: 6.5
+cont_freq_mode: null
+modify_freq_start: 0
+#modify_freq_end: 12
+modify_freq_end: 8
+
+# ============================================================================
+# VLM VERDICT CONFIGURATION
+# ============================================================================
+
+enable_vlm_verdict: true
+vlm_model_size: "4B"
+vlm_verdict_timestep: 2
+vlm_context_folder: data/vlm_in_context_inputs
+vlm_max_tries: 4
+vlm_boost_neglect: -0.045
+vlm_boost_suppression: 0.05
+
+# GPU/CPU offloading configuration
+# When True: VLM is offloaded to CPU when not in use, and Flux models are moved to CPU when VLM is active
+# When False: All models remain on GPU (requires more VRAM)
+perform_offloading: false

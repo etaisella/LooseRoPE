@@ -1,0 +1,8 @@
+OBJECT: "a strawberry"
+BACKGROUND: "a blurred green background with a light gray surface beneath the strawberry"
+BLENDING INSTRUCTION: "place the strawberry onto the new scene, ensuring its surface and green leaves match the lighting and texture. remove any visible background elements from the original crop to maintain focus on the strawberry."
+
+--- RAW VLM OUTPUT ---
+OBJECT: "a strawberry"
+BACKGROUND: "a blurred green background with a light gray surface beneath the strawberry"
+BLENDING INSTRUCTION: "place the strawberry onto the new scene, ensuring its surface and green leaves match the lighting and texture. remove any visible background elements from the original crop to maintain focus on the strawberry."

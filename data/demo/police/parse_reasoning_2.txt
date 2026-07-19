@@ -1,0 +1,7 @@
+OBJECT: "flower bouquet"
+BACKGROUND: "white background"
+BLENDING INSTRUCTION: "blend the cropped objects into the image in a convincing manner. blend in only the flower bouquet into the image and leave no white background"
+
+--- RAW VLM OUTPUT ---
+OBJECT: "flower bouquet"
+BACKGROUND: "white background"

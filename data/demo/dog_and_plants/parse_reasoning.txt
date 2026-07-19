@@ -1,0 +1,8 @@
+OBJECT: "a yellow Labrador Retriever sitting on a stone patio"
+BACKGROUND: "a teal door and a potted plant with red flowers"
+BLENDING INSTRUCTION: "place the dog in the new scene, ensuring it sits naturally on the ground. keep only the dog and remove the door and plant from the background"
+
+--- RAW VLM OUTPUT ---
+OBJECT: "a yellow Labrador Retriever sitting on a stone patio"
+BACKGROUND: "a teal door and a potted plant with red flowers"
+BLENDING INSTRUCTION: "place the dog in the new scene, ensuring it sits naturally on the ground. keep only the dog and remove the door and plant from the background"

@@ -1,0 +1,24 @@
+# PyTorch and Detectron2 are installed in the required order by
+# scripts/setup_environment.sh.
+accelerate==1.9.0
+diffusers==0.36.0
+huggingface-hub==0.34.3
+matplotlib==3.10.5
+numpy==2.2.6
+omegaconf==2.3.0
+opencv-python==4.12.0.88
+peft==0.17.0
+Pillow==12.3.0
+PyYAML==6.0.2
+qwen-vl-utils==0.0.14
+safetensors==0.5.3
+scikit-image==0.25.2
+scipy==1.15.3
+sentencepiece==0.2.1
+setuptools<81
+termcolor==3.1.0
+tokenizers==0.22.0
+tqdm==4.67.1
+transformers @ git+https://github.com/huggingface/transformers.git@087775d10e0171f0cf7010fba70954aafd450d98
+typing-inspection==0.4.1
+wandb==0.21.3

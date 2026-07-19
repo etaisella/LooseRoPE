@@ -1,0 +1,16 @@
+# Runtime outputs
+outputs/
+temp_latents/
+wandb/
+
+# User-created examples from example_maker.py
+data/examples/
+
+# Python/cache artifacts
+__pycache__/
+**/__pycache__/
+*.py[cod]
+
+# Notebook/editor artifacts
+**/.ipynb_checkpoints/
+.DS_Store

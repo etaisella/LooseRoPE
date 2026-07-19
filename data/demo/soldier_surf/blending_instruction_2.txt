@@ -1,0 +1,1 @@
+blend the cropped objects into the image in a convincing manner. blend in only the wooden surfboard into the image and leave no white background

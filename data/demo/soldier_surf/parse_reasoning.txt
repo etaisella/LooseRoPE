@@ -1,0 +1,8 @@
+OBJECT: "surfboard"
+BACKGROUND: "white"
+BLENDING INSTRUCTION: "place the surfboard into the scene, ensuring it appears naturally positioned. do not include any background elements from the crop."
+
+--- RAW VLM OUTPUT ---
+OBJECT: "surfboard"
+BACKGROUND: "white"
+BLENDING INSTRUCTION: "place the surfboard into the scene, ensuring it appears naturally positioned. do not include any background elements from the crop."

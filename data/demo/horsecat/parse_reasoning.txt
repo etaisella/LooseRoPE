@@ -1,0 +1,8 @@
+OBJECT: "a fluffy orange and white cat"
+BACKGROUND: "blurry green foliage"
+BLENDING INSTRUCTION: "place the cat into the new scene, ensuring its fur and eyes match the lighting. keep the background blurred and natural, avoiding any visible crop lines or leftover background elements"
+
+--- RAW VLM OUTPUT ---
+OBJECT: "a fluffy orange and white cat"
+BACKGROUND: "blurry green foliage"
+BLENDING INSTRUCTION: "place the cat into the new scene, ensuring its fur and eyes match the lighting. keep the background blurred and natural, avoiding any visible crop lines or leftover background elements"
